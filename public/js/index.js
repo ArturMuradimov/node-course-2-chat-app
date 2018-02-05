@@ -8,7 +8,7 @@ socket.on('connect', function () {
   //   text: 'Hey. This is Andrew.'
   // });
   socket.emit('createMessage', {
-    to: 'jen',
+    from: 'andrew',
     text: 'Hey. This is Andrew.'
   });
 });
