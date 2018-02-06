@@ -35,9 +35,10 @@ io.on('connection', (socket) => {
   //   console.log('createEmail', newEmail);
   // });
 
-  socket.on('createMessage', (newMessage) => {
+  socket.on('createMessage', (newMessage, callback) => {
     console.log('createMessage', newMessage);
     io.emit('newMessage', generateMessage(newMessage.from, newMessage.text));
+    callback('This is from server');
     // socket.broadcast.emit('newMessage', {
     //   from: newMessage.from,
     //   text: newMessage.text,
