@@ -25,13 +25,19 @@ io.on('connection', (socket) => {
       return callback('Name and room name are required');
     }
 
-    socket.join(params.room);
-    users.removeUser(socket.id);
-    users.addUser(socket.id, params.name, params.room);
+    if (users.getUserByName(params.name)) {
+      return callback(`User ${params.name} allready joined to chat`);
+    }
 
-    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    var room = params.room.toUpperCase();
+
+    socket.join(room);
+    users.removeUser(socket.id);
+    users.addUser(socket.id, params.name, room);
+
+    io.to(room).emit('updateUserList', users.getUserList(room));
     socket.emit('newMessage', generateMessage('admin', `${params.name}, welcome to the chat app`));
-    socket.broadcast.to(params.room).emit('newMessage', generateMessage('admin', `${params.name} joined`));
+    socket.broadcast.to(room).emit('newMessage', generateMessage('admin', `${params.name} joined`));
 
     callback();
   });

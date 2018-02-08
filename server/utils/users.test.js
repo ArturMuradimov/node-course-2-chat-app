@@ -73,4 +73,18 @@ describe('Users', () => {
     var user = users.getUser('0');
     expect(user).toBeFalsy();
   });
+
+  it('should find user by name', () => {
+    var user = users.getUserByName('User3');
+    expect(user).toEqual({
+      id: '3',
+      name: 'User3',
+      room: 'CourseA'
+    });
+  });
+
+  it('should not find user by name', () => {
+    var user = users.getUserByName('0');
+    expect(user).toBeFalsy();
+  });
 });
